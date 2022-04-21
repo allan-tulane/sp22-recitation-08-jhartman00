@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import deque
 
 def make_undirected_graph(edge_list):
     """ Makes an undirected graph from a list of edge tuples. """
@@ -15,10 +16,13 @@ def reachable(graph, start_node):
       the set of nodes reachable from start_node
     """
     result = set([start_node])
-    frontier = set([start_node])
+    frontier = deque([start_node])
     while len(frontier) != 0:
-        ###TODO
-        pass
+        vertex = frontier.popleft()
+        for neighbor in graph[vertex]:
+            if neighbor not in result:
+                result.add(neighbor)
+                frontier.append(neighbor)
     return result
 
 def test_reachable():
@@ -58,3 +62,7 @@ def test_n_components():
 
     graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
     assert n_components(graph) == 2
+
+
+if __name__ == "__main__":
+    test_reachable()
