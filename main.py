@@ -37,8 +37,12 @@ def test_reachable():
 
 
 def connected(graph):
-    ### TODO
-    pass
+    nodes = len(graph)
+    first_node = next(iter(graph))
+    reached_from_first = reachable(graph, first_node)
+    if (nodes == len(reached_from_first)):
+        return True
+    return False
 
 def test_connected():
     graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
@@ -54,7 +58,12 @@ def n_components(graph):
       the number of connected components in an undirected graph
     """
     ### TODO
-    pass
+    parts = set()
+    for k, v in graph.items():
+        part = reachable(graph, k)
+        part = tuple(sorted(part))
+        parts.add(part)
+    return len(parts)
 
 def test_n_components():
     graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
@@ -66,3 +75,5 @@ def test_n_components():
 
 if __name__ == "__main__":
     test_reachable()
+    test_connected()
+    test_n_components()
